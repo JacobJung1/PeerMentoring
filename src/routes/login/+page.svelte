@@ -1,5 +1,10 @@
 <script>
-    import { loggedInName, loggedInEmail, loggedInId } from "../../store";
+    import {
+        loggedInName,
+        loggedInEmail,
+        loggedInId,
+        userType,
+    } from "../../store";
     import { goto } from "$app/navigation";
 
     let email = "";
@@ -63,24 +68,33 @@
                 loggedInName.set(data.results[0].field_2554094);
                 loggedInEmail.set(data.results[0].field_2554089);
                 loggedInId.set(data.results[0].id);
+                userType.set(data.results[0].field_2554096.value);
                 console.log($loggedInName);
                 console.log($loggedInEmail);
                 console.log($loggedInId);
-                goto("/mentor/dashboard");
+                console.log($userType);
+                if ($userType === "Mentor") {
+                    goto("/mentor/dashboard");
+                } else if ($userType === "Mentee") {
+                    goto("/mentee/dashboard");
+                }
             }
         }
     }
 </script>
 
-<div>
-    <h1>Email</h1>
-    <input type="text" placeholder="Enter your email" bind:value={email} />
-    <h1>Password</h1>
-    <input
-        type="text"
-        placeholder="Enter your password"
-        bind:value={password}
-    />
-    <button on:click={() => loginUser()}>Login</button>
+<div class="h-vh flex flex-col items-center justify-center">
+    <div>
+        <h1>Email</h1>
+        <input type="text" placeholder="Enter your email" bind:value={email} />
+    </div>
+    <div>
+        <h1>Password</h1>
+        <input
+            type="text"
+            placeholder="Enter your password"
+            bind:value={password}
+        />
+    </div>
+    <button class="mt-5" on:click={() => loginUser()}>Login</button>
 </div>
--

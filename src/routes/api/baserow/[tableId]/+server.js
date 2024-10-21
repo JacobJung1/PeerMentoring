@@ -40,45 +40,15 @@ export async function GET({ params, url }) {
 }
 
 export async function POST({ params, request }) {
-    const { tableId } = params;
-    const body = await request.json();
-    
-    try {
-      const url = `https://api.baserow.io/api/database/rows/table/${tableId}/`;
-      console.log('POST request URL:', url);
-      
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Token ${import.meta.env.VITE_BASEROW_API_TOKEN}`
-        },
-        body: JSON.stringify(body)
-      });
-  
-      if (!response.ok) {
-        console.error('Failed to insert data:', response.statusText);
-        return json({ error: 'Failed to insert data into Baserow' }, { status: response.status });
-      }
-  
-      const data = await response.json();
-      return json(data, { status: 201 });
-      
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      return json({ error: 'Failed to insert data into Baserow' }, { status: 500 });
-    }
-}
-export async function PATCH({ params, request }) {
-  const { tableId, rowId } = params;
+  const { tableId } = params;
   const body = await request.json();
 
   try {
-    const url = `https://api.baserow.io/api/database/rows/table/${tableId}/${rowId}/`;
-    console.log('PATCH request URL:', url);
+    const url = `https://api.baserow.io/api/database/rows/table/${tableId}/`;
+    console.log('POST request URL:', url);
 
     const response = await fetch(url, {
-      method: 'PATCH', // Use PATCH for partial updates
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Token ${import.meta.env.VITE_BASEROW_API_TOKEN}`
@@ -87,15 +57,15 @@ export async function PATCH({ params, request }) {
     });
 
     if (!response.ok) {
-      console.error('Failed to update row:', response.statusText);
-      return json({ error: 'Failed to update row in Baserow' }, { status: response.status });
+      console.error('Failed to insert data:', response.statusText);
+      return json({ error: 'Failed to insert data into Baserow' }, { status: response.status });
     }
 
     const data = await response.json();
-    return json(data, { status: 200 });
+    return json(data, { status: 201 });
 
   } catch (error) {
-    console.error('Error updating row:', error);
-    return json({ error: 'Failed to update row in Baserow' }, { status: 500 });
+    console.error('Error fetching data:', error);
+    return json({ error: 'Failed to insert data into Baserow' }, { status: 500 });
   }
 }

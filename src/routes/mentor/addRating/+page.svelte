@@ -1,10 +1,12 @@
 <script>
     import { goto } from "$app/navigation";
-    export let meetingId;
+    import { page } from "$app/stores";
 
-    async function setRating(rating) {
+    $: meetingId = $page.url.searchParams.get("meetingId");
+
+    async function addRating(rating) {
         try {
-            const response = await fetch(`/api/baserow/344022/${meetingId}`, {
+            const response = await fetch(`/api/baserow/344022/${meetingId}/`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
@@ -30,10 +32,15 @@
 </script>
 
 <div class="flex flex-col items-left justify-center">
-    <p>Choose Rating</p>
-    <button on:click={() => setRating(1)}>1</button>
-    <button on:click={() => setRating(2)}>2</button>
-    <button on:click={() => setRating(3)}>3</button>
-    <button on:click={() => setRating(4)}>4</button>
-    <button on:click={() => setRating(5)}>5</button>
+    <p>Meeting ID: {meetingId}</p>
+    <div class="flex flex-row items-center gap-2">
+        <p>Choose Rating:</p>
+        <div>
+            <button on:click={() => addRating(1)}>1</button>
+            <button on:click={() => addRating(2)}>2</button>
+            <button on:click={() => addRating(3)}>3</button>
+            <button on:click={() => addRating(4)}>4</button>
+            <button on:click={() => addRating(5)}>5</button>
+        </div>
+    </div>
 </div>
