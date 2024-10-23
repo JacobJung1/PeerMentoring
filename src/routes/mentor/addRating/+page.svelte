@@ -12,7 +12,7 @@
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    field_2546667: rating, // Replace with the field you're updating
+                    field_2546667: rating,
                 }),
             });
 
