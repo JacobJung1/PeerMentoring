@@ -39,7 +39,7 @@
     }
     fetchMentees();
 
-    $: date = new Date().toISOString().split("T")[0]; // Format the date as yyyy-MM-dd
+    $: date = new Date().toISOString().split("T")[0];
     $: time = 1941407;
     $: selectedMentee = 36;
 
